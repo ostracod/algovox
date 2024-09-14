@@ -1,0 +1,43 @@
+
+body {
+    padding: 20px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+}
+
+a {
+    color: #000000;
+}
+
+.title1, .title2 {
+    font-family: Arial;
+    font-weight: bold;
+}
+
+.title1 {
+    font-size: 28px;
+}
+
+.title2 {
+    font-size: 20px;
+}
+
+.av {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.code {
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    font-size: 14px;
+    background: #DDDDDD;
+    border-radius: 3px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+
