@@ -1,41 +1,26 @@
 
 import * as fs from "fs";
 import { escape } from "html-escaper";
+import dateFormat from "dateformat";
+
+const constantMap = {
+    timestamp: dateFormat(new Date(), "h:MM TT (Z), mmmm dS, yyyy"),
+};
 
 const replaceElements = (text, startIndex = 0) => {
     const resultTextList = [];
-    let startBraceIndex;
-    let closeBraceIndex;
-    let hasCloseBrace;
-    let nextIndex;
-    const replaceNestedElements = () => {
-        const result = replaceElements(text, startBraceIndex + 1);
-        const contentEndIndex = result.index;
-        if (text.charAt(contentEndIndex) !== "}") {
-            throw new Error("Missing close brace");
-        }
-        nextIndex = contentEndIndex + 1;
-        return result.text;
-    };
-    const readPlainContent = () => {
-        if (!hasCloseBrace) {
-            throw new Error("Missing close brace");
-        }
-        const content = text.substring(startBraceIndex + 1, closeBraceIndex);
-        nextIndex = closeBraceIndex + 1
-        return content;
-    };
     let index = startIndex;
     let hasReachedEnd = false;
     while (!hasReachedEnd) {
         const closeParenIndex = text.indexOf("){", index);
-        closeBraceIndex = text.indexOf("}", index);
-        hasCloseBrace = (closeBraceIndex >= 0);
+        const closeBraceIndex = text.indexOf("}", index);
+        const hasCloseBrace = (closeBraceIndex >= 0);
         const fragmentStartIndex = index;
         let fragmentEndIndex;
-        let element;
+        let elementHtml;
+        let nextIndex;
         if (closeParenIndex >= 0 && (!hasCloseBrace || closeBraceIndex > closeParenIndex)) {
-            startBraceIndex = closeParenIndex + 1;
+            const startBraceIndex = closeParenIndex + 1;
             const openParenIndex = text.lastIndexOf("(", closeParenIndex);
             if (openParenIndex < startIndex) {
                 throw new Error("Text contains malformed element");
@@ -43,18 +28,34 @@ const replaceElements = (text, startIndex = 0) => {
             fragmentEndIndex = openParenIndex;
             const prefix = text.substring(openParenIndex + 1, closeParenIndex);
             if (prefix.charAt(0) === "!") {
+                if (!hasCloseBrace) {
+                    throw new Error("Missing close brace");
+                }
+                const content = text.substring(startBraceIndex + 1, closeBraceIndex);
                 const elementType = prefix.substring(1);
                 if (elementType === "link") {
-                    const url = readPlainContent();
-                    element = `<a href="${url}">${url}</a>`;
+                    elementHtml = `<a href="${content}">${content}</a>`;
+                } else if (elementType === "char") {
+                    elementHtml = String.fromCharCode(parseInt(content, 16));
+                } else if (elementType === "image") {
+                    elementHtml = `<img src="${content}" />`;
+                } else if (elementType === "const") {
+                    elementHtml = constantMap[content];
+                    if (typeof elementHtml === "undefined") {
+                        throw new Error(`Unknown constant "${content}"`);
+                    }
                 } else {
-                    // TODO: Handle more element types.
-                    // TODO: Throw an error for unrecognized element types.
-                    element = replaceNestedElements();
+                    throw new Error(`Unknown element prefix "${prefix}"`);
                 }
+                nextIndex = closeBraceIndex + 1
             } else {
-                const content = replaceNestedElements();
-                element = `<span class="${prefix}">${content}</span>`;
+                const result = replaceElements(text, startBraceIndex + 1);
+                const contentEndIndex = result.index;
+                if (text.charAt(contentEndIndex) !== "}") {
+                    throw new Error("Missing close brace");
+                }
+                elementHtml = `<span class="${prefix}">${result.text}</span>`;
+                nextIndex = contentEndIndex + 1;
             }
         } else {
             if (hasCloseBrace) {
@@ -63,15 +64,15 @@ const replaceElements = (text, startIndex = 0) => {
                 fragmentEndIndex = text.length;
             }
             nextIndex = fragmentEndIndex;
-            element = null;
+            elementHtml = null;
             hasReachedEnd = true;
         }
         if (fragmentEndIndex > fragmentStartIndex) {
             const fragment = escape(text.substring(fragmentStartIndex, fragmentEndIndex));
             resultTextList.push(fragment);
         }
-        if (element !== null) {
-            resultTextList.push(element);
+        if (elementHtml !== null) {
+            resultTextList.push(elementHtml);
         }
         index = nextIndex;
     }
