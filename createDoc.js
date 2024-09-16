@@ -58,7 +58,7 @@ class Block extends Div {
     
     constructor(lines) {
         super(lines)
-        this.children = parseGroups(this.lines);
+        this.children = parseDivGroups(this.lines);
     }
     
     toHtml() {
@@ -163,9 +163,47 @@ const replaceLineElements = (line) => {
     }
 };
 
+const parseDivGroup = (lines, startIndex, groupConstructor, prefix) => {
+    const groupLines = [];
+    let index = startIndex;
+    while (index < lines.length) {
+        const line = lines[index];
+        if (line.startsWith(prefix)) {
+            groupLines.push(line.substring(prefix.length));
+        } else {
+            break;
+        }
+        index += 1;
+    }
+    const group = (groupLines.length > 0) ? new groupConstructor(groupLines) : null;
+    return { group, index };
+};
+
+const parseBlock = (lines, startIndex) => parseDivGroup(lines, startIndex, Block, "    ");
+
+const parseList = (lines, startIndex) => parseDivGroup(lines, startIndex, List, "> ");
+
 const parseDivGroups = (lines) => {
-    // TODO: Implement.
-    return lines.map((line) => new Row(line));
+    const output = [];
+    let index = 0;
+    while (index < lines.length) {
+        const { group: block, index: nextIndex1 } = parseBlock(lines, index);
+        if (block !== null) {
+            output.push(block);
+            index = nextIndex1;
+            continue;
+        }
+        const { group: list, index: nextIndex2 } = parseList(lines, index);
+        if (list !== null) {
+            output.push(list);
+            index = nextIndex2;
+            continue;
+        }
+        const row = new Row(lines[index]);
+        output.push(row);
+        index += 1;
+    }
+    return output;
 };
 
 const parseParagraphs = (lines) => {
