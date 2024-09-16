@@ -7,8 +7,80 @@ const constantMap = {
     timestamp: dateFormat(new Date(), "h:MM TT (Z), mmmm dS, yyyy"),
 };
 
+class Node {
+    // Concrete subclasses of Node must implement these methods:
+    // toHtml
+    
+}
+
+class Row extends Node {
+    
+    constructor(text) {
+        super();
+        this.text = text;
+    }
+    
+    toHtml() {
+        return `<div>${replaceLineElements(this.text)}</div>`;
+    }
+}
+
+class Group extends Node {
+    
+    constructor(lines) {
+        super();
+        this.lines = lines;
+    }
+}
+
+class Div extends Group {
+    
+    constructor(lines) {
+        super(lines)
+        this.children = parseDivGroups(this.lines);
+    }
+    
+    getChildrenHtml() {
+        return this.children.map((child) => child.toHtml()).join("\n");
+    }
+}
+
+class Paragraph extends Div {
+    
+    toHtml() {
+        return `<div style="margin-bottom: 15px;">
+${this.getChildrenHtml()}
+</div>`;
+    }
+}
+
+class Block extends Div {
+    
+    constructor(lines) {
+        super(lines)
+        this.children = parseGroups(this.lines);
+    }
+    
+    toHtml() {
+        return `<div style="margin-left: 30px;">
+${this.getChildrenHtml()}
+</div>`;
+    }
+}
+
+class List extends Group {
+    
+    toHtml() {
+        const content = this.lines.map((line) => `<li>${replaceLineElements(line)}</li>`)
+            .join("\n");
+        return `<ul>
+${content}
+</ul>`;
+    }
+}
+
 const replaceElements = (text, startIndex = 0) => {
-    const resultTextList = [];
+    const htmlList = [];
     let index = startIndex;
     let hasReachedEnd = false;
     while (!hasReachedEnd) {
@@ -54,7 +126,7 @@ const replaceElements = (text, startIndex = 0) => {
                 if (text.charAt(contentEndIndex) !== "}") {
                     throw new Error("Missing close brace");
                 }
-                elementHtml = `<span class="${prefix}">${result.text}</span>`;
+                elementHtml = `<span class="${prefix}">${result.html}</span>`;
                 nextIndex = contentEndIndex + 1;
             }
         } else {
@@ -68,35 +140,62 @@ const replaceElements = (text, startIndex = 0) => {
             hasReachedEnd = true;
         }
         if (fragmentEndIndex > fragmentStartIndex) {
-            const fragment = escape(text.substring(fragmentStartIndex, fragmentEndIndex));
-            resultTextList.push(fragment);
+            const fragmentHtml = escape(text.substring(fragmentStartIndex, fragmentEndIndex));
+            htmlList.push(fragmentHtml);
         }
         if (elementHtml !== null) {
-            resultTextList.push(elementHtml);
+            htmlList.push(elementHtml);
         }
         index = nextIndex;
     }
-    return { text: resultTextList.join(""), index };
+    return { html: htmlList.join(""), index };
 };
 
 const replaceLineElements = (line) => {
     try {
-        const { text, index } = replaceElements(line);
+        const { html, index } = replaceElements(line);
         if (index < line.length) {
             throw new Error("Line contains unmatched brace");
         }
-        return text;
+        return html;
     } catch (error) {
         throw new Error(error.message + ": " + line);
     }
 };
 
+const parseDivGroups = (lines) => {
+    // TODO: Implement.
+    return lines.map((line) => new Row(line));
+};
+
+const parseParagraphs = (lines) => {
+    const output = [];
+    let paragraphLines = [];
+    let index = 0;
+    while (true) {
+        const hasReachedEnd = (index >= lines.length);
+        const line = hasReachedEnd ? "" : lines[index];
+        if (line.length > 0) {
+            paragraphLines.push(line);
+        } else if (paragraphLines.length > 0) {
+            const paragraph = new Paragraph(paragraphLines);
+            output.push(paragraph);
+            paragraphLines = [];
+        }
+        if (hasReachedEnd) {
+            break;
+        }
+        index += 1;
+    }
+    return output;
+};
+
 console.log("Creating documentation page...");
 
-const descriptionContent = fs.readFileSync("./description.txt", "utf8")
-    .split("\n")
-    .map((line) => replaceLineElements(line))
-    .join("<br />\n");
+const descriptionLines = fs.readFileSync("./description.txt", "utf8").split("\n")
+const descriptionParagraphs = parseParagraphs(descriptionLines);
+const descriptionHtml = descriptionParagraphs.map((paragraph) => paragraph.toHtml())
+    .join("\n");
 
 const cssContent = fs.readFileSync("./documentation.css", "utf8");
 
@@ -108,7 +207,7 @@ ${cssContent}
         </style>
     </head>
     <body>
-${descriptionContent}
+${descriptionHtml}
     </body>
 </html>
 `;

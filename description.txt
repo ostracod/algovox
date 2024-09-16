@@ -13,6 +13,9 @@ Link: (!link){https://github.com/ostracod/algovox}
 
 Not HTML: &cent;
 
+This paragraph has
+multiple lines
+
 > One
 > Two
 > Three
