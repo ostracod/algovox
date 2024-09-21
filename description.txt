@@ -1,30 +1,33 @@
 
 (title1){ALGOVOX}
 
-Link: (!link){https://github.com/ostracod/algovox}
+A constructed language by Jack Eisenmann
 
-(av){Nested (underline){style}}
+This page was generated from (!link){https://github.com/ostracod/algovox} at (!const){timestamp}.
 
-(!image){test.png}
+(title2){DESIGN FEATURES}
 
-(code){Box: (!char){25A3}}
+Algovox is a constructed language for communication between humans, but borrows elements of computer programming languages. In particular, Algovox follows the imperative programming paradigm, and includes the following features:
 
-(!const){timestamp} is the timestamp
+> Mutable variable declaration
+> Storage of nouns in arrays
+> "If" statements for conditional evaluation
+> Loops for iterative evaluation
 
-Not HTML: &cent;
+Algovox is Turing-complete. With the correct sequence of statements, the speaker can express any Turing machine, using an array of nouns to represent an infinitely long tape.
 
-This paragraph has
-multiple lines
+Algovox has the following design goals:
 
-> One
-> Two
-> Three
+> The grammar should prevent syntactic ambiguity.
+> The semantics should be precise, especially pertaining to sets of nouns.
+> The language should allow communication of complex ideas.
+> The morphology should incorporate mnemonics into words to facilitate memorization.
+> The lexicon should contain between 800 to 1000 words.
 
-    Four
-    Five
-        Six
-        Seven
-    Eight
-    Nine
+Depending on who you ask, Algovox may be considered to be a logical language ("loglang"). However, the design of Algovox is rooted more in software engineering than formal logic.
+
+(title2){PHONOLOGY}
+
+TODO: Write the rest of the documentation.
 
 
