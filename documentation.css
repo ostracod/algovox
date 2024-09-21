@@ -34,6 +34,8 @@ a {
     font-size: 14px;
     background: #DDDDDD;
     border-radius: 3px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .underline {

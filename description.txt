@@ -28,6 +28,45 @@ Depending on who you ask, Algovox may be considered to be a logical language ("l
 
 (title2){PHONOLOGY}
 
+Algovox has 16 consonants:
+
+> (av){k} = /k/ as in "(underline){C}an"
+> (av){g} = /g/ as in "(underline){G}et"
+> (av){s} = /s/ as in "(underline){S}et"
+> (av){z} = /z/ as in "(underline){Z}ip"
+> (av){c} = /(!char){283}/ as in "(underline){Sh}ot"
+> (av){j} = /(!char){292}/ as in "Mea(underline){s}ure"
+> (av){t} = /t/ as in "(underline){T}an"
+> (av){d} = /d/ as in "(underline){D}ot"
+> (av){f} = /f/ as in "(underline){F}an"
+> (av){v} = /v/ as in "(underline){V}an"
+> (av){p} = /p/ as in "(underline){P}an"
+> (av){b} = /b/ as in "(underline){B}an"
+> (av){m} = /m/ as in "(underline){M}an"
+> (av){n} = /n/ as in "(underline){N}et"
+> (av){r} = /(!char){279}/ as in "(underline){R}an"
+> (av){l} = /l/ as in "(underline){L}et"
+
+Algovox has 5 vowels:
+
+> (av){i} = /i/ as in "B(underline){ee}t"
+> (av){e} = /(!char){25B}/ as in "B(underline){e}t
+> (av){a} = /a/ as in "B(underline){a}t"
+> (av){o} = /o/ as in "B(underline){oa}t"
+> (av){u} = /u/ as in "B(underline){oo}t"
+
+Every syllable has the structure (code){(C1)C2(C3)V(C4)}. Syllable phonemes follow the rules below:
+
+> (code){C2} and (code){V} are required. They cannot be absent.
+> (code){C1}, (code){C3}, and (code){C4} are optional. They may be absent.
+> (code){C1} may be (av){s} if (code){C2} is (av){k}, (av){t}, (av){p}, or (av){m}. Otherwise, (code){C1} must be absent.
+> (code){C2} may be (av){k}, (av){g}, (av){s}, (av){z}, (av){c}, (av){j}, (av){t}, (av){d}, (av){f}, (av){v}, (av){p}, (av){b}, (av){m}, or (av){r}.
+> (code){C3} may be (av){r} if (code){C2} is (av){k}, (av){g}, (av){t}, (av){d}, (av){p}, or (av){b}. Otherwise, (code){C3} must be absent.
+> (code){V} may be (av){i}, (av){e}, (av){a}, (av){o}, or (av){u}.
+> (code){C4} may be (av){n}, (av){l}, or absent.
+
+(title2){MORPHOLOGY}
+
 TODO: Write the rest of the documentation.
 
 
