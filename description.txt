@@ -65,7 +65,30 @@ Every syllable has the structure (code){(C1)C2(C3)V(C4)}. Syllable phonemes foll
 > (code){V} may be (av){i}, (av){e}, (av){a}, (av){o}, or (av){u}.
 > (code){C4} may be (av){n}, (av){l}, or absent.
 
+Emphasis in each word falls on the first syllable, and then alternates every other syllable.
+
 (title2){MORPHOLOGY}
+
+Every word consists of one or more syllables. Every syllable is a morpheme. Every morpheme is either a "blueberry morpheme" or a "cranberry morpheme".
+
+Each blueberry morpheme is defined to have a particular meaning. When a word consists of a single blueberry morpheme, the word has the same meaning as the morpheme. When a word contains multiple morphemes, blueberry morphemes in the word serve as mnemonics to remember the meaning of the word.
+
+Cranberry morphemes, on the other hand, are not defined to have any meaning out of context. Cranberry morphemes serve to differentiate words, but do not provide clues about the meanings of words. A word may consist of a single cranberry morpheme, but the meaning of such a word does not indicate the meanings of other words which contain the cranberry morpheme.
+
+Syllables which contain (av){T}, (av){G}, (av){V}, or (av){C} are cranberry morphemes. All other syllables are blueberry morphemes.
+
+When a word contains multiple morphemes, the first morpheme determines the "main" meaning of the word, while the remaining morphemes serve as modifiers.
+
+Certain vowels are considered to be in "antonym pairs":
+
+> (av){e} (original) (!char){2194} (av){i} (antonym)
+> (av){a} (original) (!char){2194} (av){u} (antonym)
+
+When a blueberry morpheme has an antonym, the morphemes will differ by an antonym vowel pair.
+
+When a word has an antonym, and the word contains a cranberry morpheme, the words may differ by an antonym vowel pair in the cranberry morpheme.
+
+(title2){EXPRESSION SYNTAX}
 
 TODO: Write the rest of the documentation.
 
