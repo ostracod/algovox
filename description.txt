@@ -90,6 +90,39 @@ When a word has an antonym, and the word contains a cranberry morpheme, the word
 
 (title2){EXPRESSION SYNTAX}
 
+Every word in an expression is either a "node" or a "relator". Each node returns a noun, and each relator describes a relationship between two nouns.
+
+Every node belongs to one of the following subcategories:
+
+> Noun literal
+> Variable
+> Function
+
+Each noun literal returns a noun which is determined by the dictionary definition of the noun literal.
+
+Each variable has a name beginng with (av){???} chosen by the speaker. Each variable stores a noun, and may be assigned a new noun at various points of evaluation. A variable returns the noun which it stores.
+
+Each function accepts one or more operand nouns. Every operand is considered to be a "primary" operand or a "secondary" operand. Each function returns a noun which depends on the provided operands and the dictionary definition of the function.
+
+Every expression has the following structure:
+
+(code){(node) (relators) (child expressions)}
+
+Every expression returns the noun which is returned by the initial node in the expression.
+
+Every expression contains one relator for each child expression. Suppose that (code){X} is the noun returned by the expression, and (code){Y} is the noun returned by a corresponding child expression. Algovox includes the following relators:
+
+> (av){???} signifies that (code){X} is a primary operand of (code){Y}
+> (av){???} signifies that (code){Y} is a primary operand of (code){X}
+> (av){???} signifies that (code){X} is a secondary operand of (code){Y}
+> (av){???} signifies that (code){Y} is a secondary operand of (code){X}
+
+The ordering of operands may be significant for certain functions. Functions consume operands in the same order as the operands appear in the parent expression.
+
+Some functions are considered to be "verbs". A verb returns a noun representing the state, quality, action, or process ("SQAP") of the verb. The primary operands of a verb are the subjects. A transitive verb can accept secondary operands, which are the direct objects of the verb. Intransitive verbs cannot accept secondary operands.
+
+(title2){STATEMENT SYNTAX}
+
 TODO: Write the rest of the documentation.
 
 
