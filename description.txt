@@ -145,6 +145,31 @@ Statements may be written on their own lines, and blocks may be indented to impr
 
 (title2){SEMANTICS}
 
-TODO: Write the rest of the documentation.
+Each noun may have one of the following types:
+
+> Physical entity (Ex: house, tree, sand, fire)
+> Concept (Ex: position, name, rule)
+> SQAP (Ex: walking, sight, happiness)
+> Number (Ex: 123, 0.5, -8)
+> Boolean (True or false)
+> List (Ordered sequence of nouns)
+
+In certain cases, the listener may not know the exact value of a noun. However, the listener may still consider an abstract representation of the value, and the listener may analytically use such a representation. For example, the listener might not know the exact population of Earth, but the listener is able to comprehend the quantity in a symbollic manner.
+
+After the listener receives a series of statements, the listener must "evaluate" the series of statements in their mind. Evaluation is subject to "control flow", where some statements may be evaluated conditionally or multiple times. Whenever the listener evaluates a statement, the listener must update their mental model of the universe to agree with the statement. If the listener deems the speaker to be untrustworthy, the listener may reject the truth of the speaker's message. However, such considerations of trust are outside the scope of this document.
+
+When the listener evaluates a statement block, the listener must evaluate each statement in the block in order beginning with the first statement. The (av){???} statement may be used to end any statement block.
+
+The (av){???} statement behaves like an "if" statement in traditional programming languages. (av){???} accepts a single argument expression which returns a boolean noun, and (av){???} begins a statement block. If the noun is true, then the listener must evaluate the statement block. If the noun is false, then the listener must ignore the statement block.
+
+The (av){???} statement may be followed by (av){???} statements and a (av){???} statement. If the (av){???} block was not evaluated, then the listener must evaluate the block of the first (av){???} statement whose condition is true. If none of the conditions were true, the listener must evaluate the block of the (av){???} statement.
+
+Note that if the listener does not know the value of a condition, the listener may still consider conditional branches in a hypothetical manner. For example, if the condition of a (av){???} statement is whether the sky is cloudy, but the listener does not know whether the sky is cloudy, the listener may still analytically respect the block of the (av){???} statement.
+
+The (av){???} statement declares a variable in the current block, and optionally assigns an initial noun to the variable. The (av){???} statement assigns a new noun to a variable. As evaluation progresses, the listener must keep track of the noun stored in each variable.
+
+The (av){???} statement behaves like a "while" statement in traditional programming languages. The listener must repeatedly evaluate the block of the (av){???} statement until the condition of the (av){???} statement is false. Beware that an infinite loop may incapacitate the listener.
+
+The (av){???} statement accepts a variable and a list of nouns. The listener must evaluate the body of the (av){???} statement once for each noun, assigning the noun to the variable prior to each evaluation.
 
 
