@@ -10,11 +10,11 @@ This page was generated from (!link){https://github.com/ostracod/algovox} at (!c
 Algovox is a constructed language for communication between humans, but borrows elements of computer programming languages. In particular, Algovox follows the imperative programming paradigm, and includes the following features:
 
 > Mutable variable declaration
-> Storage of nouns in arrays
+> Storage of nouns in lists
 > "If" statements for conditional evaluation
 > Loops for iterative evaluation
 
-Algovox is Turing-complete. With the correct sequence of statements, the speaker can express any Turing machine, using an array of nouns to represent an infinitely long tape.
+Algovox is Turing-complete. With the correct sequence of statements, the speaker can express any Turing machine, using a list of nouns to represent an infinitely long tape.
 
 Algovox has the following design goals:
 
@@ -171,5 +171,13 @@ The (av){???} statement declares a variable in the current block, and optionally
 The (av){???} statement behaves like a "while" statement in traditional programming languages. The listener must repeatedly evaluate the block of the (av){???} statement until the condition of the (av){???} statement is false. Beware that an infinite loop may incapacitate the listener.
 
 The (av){???} statement accepts a variable and a list of nouns. The listener must evaluate the body of the (av){???} statement once for each noun, assigning the noun to the variable prior to each evaluation.
+
+By default, top-level verbs in each statement are in the present tense. The tense of a verb may be specified by adding expressions which modify the SQAP of the verb. For example, (av){???} specifies that a SQAP is in the past tense, and (av){???} specifies that a SQAP is in the future tense. Verbs in child expressions have the same tense as the parent verb unless specified otherwise.
+
+By default, verbs are in the indicative mood relative to their parent context. The indicative mood indicates that the SQAP is actually occurring in the given scenario. Certain functions are defined such that their operand SQAPs are in the subjunctive mood. The subjunctive mood indicates that the SQAP is hypothetical relative to the parent context. For example, (av){???} accepts a SQAP in the subjunctive mood, and returns a boolean value equal to whether the SQAP is true.
+
+Material nouns such as water are not countable in the traditional sense, but in Algovox materials are represented as lists where each list element is a tiny bit of the material. Each tiny bit is an "infinitesimal", such as a differential quantity in the field of calculus. For example, (av){???} means "every infinitesimal of water". The infinitesimals are treated as regular nouns in Algovox. Even if the exact quantity of infinitesimals is unknown, the listener may still analytically iterate over the infinitesimals of a material.
+
+Nouns in Algovox are "passed by reference" as in the terminology of computer programming. If a noun is passed as an operand of a function, both the original context and the function hold references to the same noun. In an analagous fashion, if a noun is passed as an argument of a statement, both the original context and the statement hold references to the same noun. If a noun is mutated, any context which accesses the noun reference will receive the mutated version of the noun. Lists are mutable, so special care must be taken when passing lists. The (av){???} function may be used to copy the value of a list, which decouples the returned list from its original context.
 
 
